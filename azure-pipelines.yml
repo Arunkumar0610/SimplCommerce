@@ -38,7 +38,13 @@ jobs:
     inputs:
       codeCoverageTool: Cobertura
       summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
-
+  - script:
+    displayName: 'Upload to Codecov'
+      |
+      curl -Os https://uploader.codecov.io/latest/linux/codecov
+      chmod +x codecov
+      ./codecov -t 83ee7019-91b4-4e94-a399-673121f0459e -f "$(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml"
+  
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
@@ -69,7 +75,13 @@ jobs:
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+      summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml 
+  - script:
+    displayName: 'Upload to Codecov'
+      |
+      curl -Os https://uploader.codecov.io/latest/macos/codecov
+      chmod +x codecov
+      ./codecov -t 83ee7019-91b4-4e94-a399-673121f0459e -f "$(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml"
 
 - job: Windows
   pool:
@@ -107,7 +119,12 @@ jobs:
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+      summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
+  - script:
+    displayName: 'Upload to Codecov'
+      |
+      Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -OutFile codecov.exe
+      .\codecov.exe -t 83ee7019-91b4-4e94-a399-673121f0459e -f "$(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml"
 
 - job: LinuxRelease
   pool:
@@ -141,4 +158,10 @@ jobs:
     displayName: 'Publish code coverage'
     inputs:
       codeCoverageTool: Cobertura
-      summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+      summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
+  - script:
+    displayName: 'Upload to Codecov'
+      |
+      curl -Os https://uploader.codecov.io/latest/linux/codecov
+      chmod +x codecov
+      ./codecov -t 83ee7019-91b4-4e94-a399-673121f0459e -f "$(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml"
